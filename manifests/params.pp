@@ -1,6 +1,6 @@
 class ssh::params {
 
- case $operatingsystem {
+  case $operatingsystem {
     'centos', 'redhat', 'fedora': {
       $client_package    = 'openssh-clients'
       $server_package    = 'openssh-server'
@@ -32,6 +32,14 @@ class ssh::params {
       $ssh_config  = '/etc/ssh_config'
       $sshd_config = '/etc/sshd_config'
     }
+    'solaris','sunos': {
+      $client_package    = 'network/ssh'
+      $server_package    = 'network/ssh'
+      $ssh_service       = 'ssh'
+      $ssh_config        = '/etc/ssh_config'
+      $sshd_config       = '/etc/sshd_config'
+    }
+
     default: {
       fail("module ssh does not support operatingsystem $operatingsystem")
     }

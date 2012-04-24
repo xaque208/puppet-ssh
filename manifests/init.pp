@@ -18,22 +18,24 @@ class ssh {
   $sshd_config    = $ssh::params::sshd_config
   $ssh_service    = $ssh::params::ssh_service
 
-  if $kernel == "Linux" {
+  if $kernel == "Linux" or $kernel == 'SunOS' {
     package { $client_package:
         ensure => latest,
     }
   }
 
   file { $ssh_config:
+    ensure    => file,
     owner     => root,
     group     => 0,
     mode      => 0644,
-    ensure    => file,
     require   => $kernel ? {
-      "Darwin" => undef,
+      "Darwin"  => undef,
       'freebsd' => undef,
       'openbsd' => undef,
-      default  => Package[$client_package],
+      'solaris' => undef,
+      'SunOS'   => undef,
+      default   => Package[$client_package],
     }
   }
 }
