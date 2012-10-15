@@ -50,5 +50,17 @@ class ssh::server {
     hasrestart => true,
   }
 
-}
+  file { $ssh::params::ssh_dir:
+    ensure => directory,
+    owner  => 0,
+    group  => 0,
+    mode   => '0755',
+  }
 
+  file { $ssh::params::known_hosts:
+    ensure => present,
+    owner  => 0,
+    group  => 0,
+    mode   => '0644',
+  }
+}
