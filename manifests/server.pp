@@ -10,10 +10,19 @@
 #
 # Sample Usage:
 #
-class ssh::server {
+class ssh::server(
+  $permit_root_login = 'no',
+) {
   include ssh
   include ssh::params
   include concat::setup
+
+  $permit_root_login_values = [ 'no', 'without-password', 'forced-commands-only', 'yes' ]
+
+  unless $permit_root_login in $permit_root_login_values {
+    fail("Invalid value '${permit_root_login}' for permit_root_login")
+  }
+
   $ssh_service    = $ssh::params::ssh_service
   $server_package = $ssh::params::server_package
   $sshd_config    = $ssh::params::sshd_config
@@ -21,7 +30,7 @@ class ssh::server {
   if $kernel == "Linux" {
     if !defined(Package[$server_package]) {
       package { $server_package:
-        ensure  => latest, 
+        ensure  => latest,
         notify  => Service['sshd'],
       }
     }

@@ -1,6 +1,5 @@
-#
-# This file is puppet managed any changes will be overwritten.
-#
+# This file is being managed by puppet; any manual changes to this file will
+# be overwritten.
 Protocol 2
 SyslogFacility AUTHPRIV
 PasswordAuthentication no
@@ -8,11 +7,11 @@ ChallengeResponseAuthentication yes
 GSSAPIAuthentication yes
 GSSAPICleanupCredentials yes
 UsePAM yes
-AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES 
-AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT 
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
 AcceptEnv LC_IDENTIFICATION LC_ALL
 X11Forwarding no
-#Subsystem sftp /usr/lib/openssh/sftp-server 
+#Subsystem sftp /usr/lib/openssh/sftp-server
 Subsystem sftp internal-sftp
 LoginGraceTime 60
 RSAAuthentication no
@@ -27,4 +26,7 @@ PubkeyAuthentication yes
 PrintMotd no
 MaxStartups 10:30:60
 HostbasedAuthentication no
-PermitRootLogin no
+PermitRootLogin <%= permit_root_login %>
+<% unless permit_root_login == 'no' -%>
+AllowGroups wheel
+<% end -%>
