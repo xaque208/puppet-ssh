@@ -30,7 +30,7 @@ class ssh::params {
     'solaris','sunos': {
       $client_package = 'network/ssh'
       $server_package = 'network/ssh'
-      $ssh_service    = 'ssh'
+      $ssh_service    = 'network/cswopenssh'
     }
     default: {
       fail("module ssh does not support operatingsystem $operatingsystem")
