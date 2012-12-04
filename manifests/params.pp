@@ -28,8 +28,8 @@ class ssh::params {
       $ssh_service = 'sshd'
     }
     'solaris','sunos': {
-      $client_package = 'network/ssh'
-      $server_package = 'network/ssh'
+      $client_package = 'service/network/ssh'
+      $server_package = 'service/network/ssh'
       $ssh_service    = 'network/cswopenssh'
     }
     default: {
