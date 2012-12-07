@@ -47,6 +47,7 @@ class ssh::server(
       "Darwin" => undef,
       'freebsd' => undef,
       'openbsd' => undef,
+      'sunos'   => undef,
       default  => Package[$server_package],
     },
     notify  => Service['sshd'],
