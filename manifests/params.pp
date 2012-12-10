@@ -32,7 +32,7 @@ class ssh::params {
         '5.10': {
           $client_package = 'openssh'
           $server_package = 'openssh'
-          $ssh_service    = 'cwsopenssh'
+          $ssh_service    = 'svc:/network/cswopenssh:default'
         }
         '5.11': {
           $client_package = 'service/network/ssh'
