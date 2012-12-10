@@ -28,9 +28,18 @@ class ssh::params {
       $ssh_service = 'sshd'
     }
     'solaris','sunos': {
-      $client_package = 'service/network/ssh'
-      $server_package = 'service/network/ssh'
-      $ssh_service    = 'network/cswopenssh'
+      case $operatingsystemrelease {
+        '5.10': {
+          $client_package = 'openssh'
+          $server_package = 'openssh'
+          $ssh_service    = 'cwsopenssh'
+        }
+        '5.11': {
+          $client_package = 'service/network/ssh'
+          $server_package = 'service/network/ssh'
+          $ssh_service    = 'network/cswopenssh'
+        }
+      }
     }
     default: {
       fail("module ssh does not support operatingsystem $operatingsystem")
