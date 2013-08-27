@@ -11,16 +11,21 @@
 # Sample Usage:
 #
 class ssh::server(
-  $permit_root_login = 'no',
+  $permit_root_login     = 'no',
+  $permis_x11_forwarding = 'no',
 ) {
   include ssh
   include ssh::params
   include concat::setup
 
-  $permit_root_login_values = [ 'no', 'without-password', 'forced-commands-only', 'yes' ]
+  $permit_root_login_values     = [ 'no', 'without-password', 'forced-commands-only', 'yes' ]
+  $permit_x11_forwarding_values = [ 'no', 'yes' ]
 
   unless $permit_root_login in $permit_root_login_values {
     fail("Invalid value '${permit_root_login}' for permit_root_login")
+  }
+  unless $permit_x11_forwarding in $permit_x11_forwarding_values {
+    fail("Invalid value '${permit_x11_forwarding}' for permit_x11_forwarding")
   }
 
   $ssh_service    = $ssh::params::ssh_service
