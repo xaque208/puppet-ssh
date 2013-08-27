@@ -12,7 +12,7 @@
 #
 class ssh::server(
   $permit_root_login     = 'no',
-  $permis_x11_forwarding = 'no',
+  $permit_x11_forwarding = 'no',
 ) {
   include ssh
   include ssh::params
