@@ -11,6 +11,7 @@
 # Sample Usage:
 #
 class ssh {
+
   include ssh::params
 
   $client_package = $ssh::params::client_package
@@ -18,7 +19,7 @@ class ssh {
   $sshd_config    = $ssh::params::sshd_config
   $ssh_service    = $ssh::params::ssh_service
 
-  if $kernel == "Linux" or $kernel == 'SunOS' {
+  if $::kernel == 'Linux' or $::kernel == 'SunOS' {
     package { $client_package:
         ensure => latest,
     }

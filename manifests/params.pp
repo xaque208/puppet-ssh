@@ -1,3 +1,7 @@
+# Class: ssh::params
+#
+# Sets varables for the SSH class
+#
 class ssh::params {
 
   $ssh_dir           = '/etc/ssh'
@@ -5,7 +9,7 @@ class ssh::params {
   $ssh_config        = "${ssh_dir}/ssh_config"
   $known_hosts       = "${ssh_dir}/ssh_known_hosts"
 
-  case $operatingsystem {
+  case $::operatingsystem {
     'centos', 'redhat', 'fedora': {
       $client_package = 'openssh-clients'
       $server_package = 'openssh-server'
@@ -33,7 +37,7 @@ class ssh::params {
       $ssh_service    = 'ssh'
     }
     default: {
-      fail("module ssh does not support operatingsystem $operatingsystem")
+      fail("module ssh does not support operatingsystem ${::operatingsystem}")
     }
   }
 }
