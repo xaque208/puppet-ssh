@@ -18,7 +18,13 @@ class ssh::server(
   include ssh::params
   include concat::setup
 
-  $permit_root_login_values     = [ 'no', 'without-password', 'forced-commands-only', 'yes' ]
+  $permit_root_login_values     = [
+    'no',
+    'without-password',
+    'forced-commands-only',
+    'yes'
+  ]
+
   $permit_x11_forwarding_values = [ 'no', 'yes' ]
 
   unless $permit_root_login in $permit_root_login_values {
@@ -32,7 +38,7 @@ class ssh::server(
   $server_package = $ssh::params::server_package
   $sshd_config    = $ssh::params::sshd_config
 
-  if $kernel == "Linux" {
+  if $::kernel == 'Linux' {
     if !defined(Package[$server_package]) {
       package { $server_package:
         ensure  => latest,
@@ -44,22 +50,22 @@ class ssh::server(
   concat::fragment { 'sshd_config-header':
     order   => '00',
     target  => $sshd_config,
-    content => template("ssh/sshd_config.erb"),
+    content => template('ssh/sshd_config.erb'),
   }
   concat { $sshd_config:
     mode    => '0640',
-    require => $kernel ? {
-      "Darwin" => undef,
+    require => $::kernel ? {
+      'Darwin'  => undef,
       'freebsd' => undef,
       'openbsd' => undef,
       'sunos'   => undef,
-      default  => Package[$server_package],
+      default   => Package[$server_package],
     },
     notify  => Service['sshd'],
   }
   service { 'sshd':
-    name       => $ssh_service,
     ensure     => running,
+    name       => $ssh_service,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,

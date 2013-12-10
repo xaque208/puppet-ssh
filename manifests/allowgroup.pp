@@ -1,4 +1,11 @@
-define ssh::allowgroup ($chroot=false, $tcpforwarding=false) {
+# Class: ssh::allowgroup
+#
+# Allows a group the ability to shell into a give node.
+#
+define ssh::allowgroup (
+  $chroot        = false,
+  $tcpforwarding = false
+) {
 
   include ssh::params
   include ssh::server
@@ -6,10 +13,18 @@ define ssh::allowgroup ($chroot=false, $tcpforwarding=false) {
   $sshd_config = $ssh::params::sshd_config
 
   if $chroot == true {
-  include ssh::chroot
+    include ssh::chroot
     file {
-      "/var/chroot/${name}": ensure => directory, owner => root, group => root, mode => 755;
-      "/var/chroot/${name}/drop": ensure => directory, owner => root, group => $name, mode => 775;
+      "/var/chroot/${name}":
+        ensure => directory,
+        owner  => root,
+        group  => root,
+        mode   => '0755';
+      "/var/chroot/${name}/drop":
+        ensure => directory,
+        owner  => root,
+        group  => $name,
+        mode   => '0775';
     }
 
     $allowtcp = $tcpforwarding ? {
@@ -17,17 +32,14 @@ define ssh::allowgroup ($chroot=false, $tcpforwarding=false) {
       default => 'no',
     }
 
-    $sshd_config_content = "Match group ${name}\n\t ChrootDirectory /var/chroot/${name}\n\t AllowTcpForwarding ${allowtcp}\n\t ForceCommand internal-sftp\n"
     concat::fragment { "sshd_config_chroot_group-${name}":
-      target => "$sshd_config",
-      content => $sshd_config_content,
+      target  => $sshd_config,
+      content => template('ssh/allowgroup.erb'),
     }
   }
 
   concat::fragment { "sshd_config_AllowGroups-${name}":
-    target => "$sshd_config",
+    target  => $sshd_config,
     content => "AllowGroups ${name}\n",
   }
-
 }
-
