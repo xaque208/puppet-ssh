@@ -24,6 +24,6 @@ PermitEmptyPasswords no
 RhostsRSAAuthentication no
 PubkeyAuthentication yes
 PrintMotd yes
-MaxStartups 3:75:10
+MaxStartups 50
 HostbasedAuthentication no
 PermitRootLogin no
