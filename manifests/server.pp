@@ -34,9 +34,10 @@ class ssh::server(
     fail("Invalid value '${permit_x11_forwarding}' for permit_x11_forwarding")
   }
 
-  $ssh_service    = $ssh::params::ssh_service
-  $server_package = $ssh::params::server_package
-  $sshd_config    = $ssh::params::sshd_config
+  $ssh_service     = $ssh::params::ssh_service
+  $server_package  = $ssh::params::server_package
+  $sshd_config     = $ssh::params::sshd_config
+  $syslog_facility = $ssh::params::syslog_facility
 
   if $::kernel == 'Linux' {
     if !defined(Package[$server_package]) {

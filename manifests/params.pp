@@ -11,37 +11,44 @@ class ssh::params {
 
   case $::operatingsystem {
     'centos', 'redhat', 'fedora': {
-      $client_package = 'openssh-clients'
-      $server_package = 'openssh-server'
-      $ssh_service    = 'sshd'
+      $client_package  = 'openssh-clients'
+      $server_package  = 'openssh-server'
+      $ssh_service     = 'sshd'
+      $syslog_facility = 'AUTHPRIV'
     }
     'sles': {
-      $client_package = 'openssh'
-      $server_package = 'openssh'
-      $ssh_service    = 'sshd'
+      $client_package  = 'openssh'
+      $server_package  = 'openssh'
+      $ssh_service     = 'sshd'
+      $syslog_facility = 'AUTHPRIV'
     }
     'ubuntu', 'debian': {
-      $client_package = 'openssh-client'
-      $server_package = 'openssh-server'
-      $ssh_service    = 'ssh'
+      $client_package  = 'openssh-client'
+      $server_package  = 'openssh-server'
+      $ssh_service     = 'ssh'
+      $syslog_facility = 'AUTHPRIV'
     }
     'darwin': {
-      $ssh_service = 'com.openssh.sshd'
+      $ssh_service     = 'com.openssh.sshd'
+      $syslog_facility = 'AUTHPRIV'
     }
     'freebsd': {
-      $ssh_service = 'sshd'
+      $ssh_service     = 'sshd'
+      $syslog_facility = 'AUTHPRIV'
     }
     'solaris','sunos': {
       case $operatingsystemrelease {
         '5.10': {
-          $client_package = 'openssh'
-          $server_package = 'openssh'
-          $ssh_service    = 'svc:/network/cswopenssh:default'
+          $client_package  = 'openssh'
+          $server_package  = 'openssh'
+          $ssh_service     = 'svc:/network/cswopenssh:default'
+          $syslog_facility = 'AUTH'
         }
         '5.11': {
-          $client_package = 'service/network/ssh'
-          $server_package = 'service/network/ssh'
-          $ssh_service    = 'network/cswopenssh'
+          $client_package  = 'service/network/ssh'
+          $server_package  = 'service/network/ssh'
+          $ssh_service     = 'network/ssh'
+          $syslog_facility = 'AUTH'
         }
       }
     }
