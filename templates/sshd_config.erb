@@ -1,27 +1,42 @@
-# This file is being managed by puppet; any manual changes to this file will
-# be overwritten.
-Protocol 2
-SyslogFacility <%= @syslog_facility %>
-PasswordAuthentication no
-GSSAPIAuthentication yes
-X11Forwarding <%= @permit_x11_forwarding %>
-Subsystem sftp internal-sftp
-LoginGraceTime 60
-StrictModes yes
-IgnoreRhosts yes
-LogLevel INFO
-PermitEmptyPasswords no
+
+Port <%= @port %>
+Protocol <%= @protocol %>
+UsePrivilegeSeparation <%= @useprivilegeseparation %>
+
+# Logging
+SyslogFacility <%= @syslogfacility.upcase %>
+LogLevel <%= @log_level.upcase %>
+
+# Authentication:
+
+#LoginGraceTime 2m
+PermitRootLogin <%= @permitrootlogin %>
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+
+RSAAuthentication no
 PubkeyAuthentication yes
-PrintMotd no
-MaxStartups 50
-HostbasedAuthentication no
-PermitRootLogin <%= @permit_root_login %>
-<% unless @permit_root_login == 'no' -%>
-AllowGroups wheel
+
+#PasswordAuthentication <%= @passwordauthentication %>
+#PermitEmptyPasswords <%= @permitemptypasswords %>
+
+<% if @has_pam -%>
+UsePAM <%= @usepam %>
 <% end -%>
-<% case @kernel -%>
-<% when 'Linux' -%>
-<%= scope.function_template(['ssh/_linux_config.erb']) -%>
-<% when 'SunOS' -%>
-<%= scope.function_template(['ssh/_solaris_config.erb']) -%>
+
+<% if @has_gssapi -%>
+# GSSAPI options
+GSSAPIAuthentication <%= @gssapiauthentication %>
+GSSAPICleanupCredentials <%= @gssapicleanupcredentials %>
 <% end -%>
+
+<% @subsystem.each do |k,v| -%>
+Subsystem <%= k %> <%= v %>
+<% end -%>
+
+
+#ChallengeResponseAuthentication yes
+#AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+#AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+#AcceptEnv LC_IDENTIFICATION LC_ALL

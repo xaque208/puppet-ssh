@@ -14,17 +14,18 @@ define ssh::allowgroup (
 
   if $chroot == true {
     include ssh::chroot
-    file {
-      "/var/chroot/${name}":
-        ensure => directory,
-        owner  => root,
-        group  => root,
-        mode   => '0755';
-      "/var/chroot/${name}/drop":
-        ensure => directory,
-        owner  => root,
-        group  => $name,
-        mode   => '0775';
+    file { "/var/chroot/${name}":
+      ensure => directory,
+      owner  => root,
+      group  => root,
+      mode   => '0755',
+    }
+
+    file { "/var/chroot/${name}/drop":
+      ensure => directory,
+      owner  => root,
+      group  => $name,
+      mode   => '0775';
     }
 
     $allowtcp = $tcpforwarding ? {
