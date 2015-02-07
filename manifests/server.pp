@@ -11,59 +11,37 @@
 # Sample Usage:
 #
 class ssh::server(
-  $permit_root_login     = 'no',
-  $permit_x11_forwarding = 'no',
 ) {
+
   include ssh
+  include ssh::install
+  include ssh::server::config
+
   include ssh::params
   include concat::setup
 
-  $permit_root_login_values     = [
-    'no',
-    'without-password',
-    'forced-commands-only',
-    'yes'
-  ]
-
-  $permit_x11_forwarding_values = [ 'no', 'yes' ]
-
-  unless $permit_root_login in $permit_root_login_values {
-    fail("Invalid value '${permit_root_login}' for permit_root_login")
-  }
-  unless $permit_x11_forwarding in $permit_x11_forwarding_values {
-    fail("Invalid value '${permit_x11_forwarding}' for permit_x11_forwarding")
-  }
-
   $ssh_service     = $ssh::params::ssh_service
-  $server_package  = $ssh::params::server_package
+  $ssh_packages    = $ssh::params::ssh_pckages
   $sshd_config     = $ssh::params::sshd_config
-  $syslog_facility = $ssh::params::syslog_facility
+  $needs_install   = $ssh::params::needs_install
+  $root_group      = $ssh::params::root_group
 
-  if $::kernel == 'Linux' {
-    if !defined(Package[$server_package]) {
-      package { $server_package:
-        ensure  => latest,
-        notify  => Service['sshd'],
-      }
-    }
+  concat { $sshd_config:
+    owner   => '0',
+    group   => '0',
+    mode    => '0640',
+    require => Class['ssh::install'],
+    notify  => Service['sshd'],
   }
 
   concat::fragment { 'sshd_config-header':
     order   => '00',
     target  => $sshd_config,
-    content => template('ssh/sshd_config.erb'),
+    content => template('ssh/sshd_config-header.erb'),
   }
-  concat { $sshd_config:
-    mode    => '0640',
-    require => $::kernel ? {
-      'Darwin'  => undef,
-      'freebsd' => undef,
-      'openbsd' => undef,
-      'sunos'   => undef,
-      default   => Package[$server_package],
-    },
-    notify  => Service['sshd'],
-  }
+
+  include ssh::server::config
+
   service { 'sshd':
     ensure     => running,
     name       => $ssh_service,
@@ -74,15 +52,22 @@ class ssh::server(
 
   file { $ssh::params::ssh_dir:
     ensure => directory,
-    owner  => 0,
-    group  => 0,
+    owner  => 'root',
+    group  => '0',
     mode   => '0755',
   }
 
   file { $ssh::params::known_hosts:
     ensure => present,
-    owner  => 0,
-    group  => 0,
+    owner  => 'root',
+    group  => '0',
     mode   => '0644',
+  }
+
+  # If root login is permitted, then the root group granted access.
+  $permitrootlogin = $ssh::server::config::permitrootlogin
+
+  if $permitrootlogin != 'no' {
+    ssh::allowgroup { $root_group: }
   }
 }
