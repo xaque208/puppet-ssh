@@ -58,7 +58,7 @@ class ssh::params {
       $ssh_service    = 'ssh'
     }
     default: {
-      fail("${module_name} does not support ${::operatingsystem}")
+      fail("module ${module_name} does not support ${::operatingsystem}")
     }
   }
 }

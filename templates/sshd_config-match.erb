@@ -1,0 +1,10 @@
+Match <%= @name %>
+<%-
+  @valid_keywords.map do |kw|
+    next if scope[kw.downcase] == :undef
+-%>
+  <%= [kw,scope[kw.downcase]].join(' ') %>
+<%-
+  end
+-%>
+

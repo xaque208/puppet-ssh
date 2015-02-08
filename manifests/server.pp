@@ -16,9 +16,7 @@ class ssh::server(
   include ssh
   include ssh::install
   include ssh::server::config
-
   include ssh::params
-  include concat::setup
 
   $ssh_service     = $ssh::params::ssh_service
   $ssh_packages    = $ssh::params::ssh_pckages
