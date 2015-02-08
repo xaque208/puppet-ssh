@@ -9,6 +9,8 @@ define ssh::keygen (
   $target     = '/root/.ssh/id_rsa',
 ) {
 
+  validate_re($type, ['dsa', 'ecdsa', 'ed25519', 'rsa', 'rsa1'])
+
   exec { "Generate ssh key for ${name}":
     command => "/usr/bin/ssh-keygen -t ${type} -b ${size} -N \"${passphrase}\" -f ${target}",
     creates => "${target}.pub",
