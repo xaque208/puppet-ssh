@@ -14,8 +14,8 @@ Easily define a key that should be generated at a specific location with
 
 ```Puppet
 ssh::keygen { 'Root':
-  type => 'ECDSA',
-  size => '521',
+  type   => 'ECDSA',
+  size   => '521',
   target => '/root/.ssh/id_rsa',
 }
 ```
