@@ -21,8 +21,6 @@ class ssh::server::config (
   $has_gssapi               = false,
 ){
 
-  include concat::setup
-
   $sshd_config   = $ssh::params::sshd_config
 
   concat::fragment { 'sshd_config':
