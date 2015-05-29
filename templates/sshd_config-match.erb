@@ -2,9 +2,9 @@ Match <%= @name %>
 <%-
   @valid_keywords.map do |kw|
     next if scope[kw.downcase] == :undef
+    next if scope[kw.downcase] == nil
 -%>
   <%= [kw,scope[kw.downcase]].join(' ') %>
 <%-
   end
 -%>
-
