@@ -1,8 +1,7 @@
 # Class: ssh::server::config
 #
-# Provide the configuration paramaters necessary to configure the sshd(8)
-# server and inject variables into the sshd_config file through the use of the
-# concat erb template..
+# Provide the configuration parameters necessary to configure sshd(8)
+# through sshd_config(5) from a template.
 #
 class ssh::server::config (
   $port                     = '22',
