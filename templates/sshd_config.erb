@@ -26,13 +26,8 @@ UsePAM <%= @usepam %>
 <% end -%>
 
 <% if @has_gssapi -%>
-# GSSAPI options
 GSSAPIAuthentication <%= @gssapiauthentication %>
 GSSAPICleanupCredentials <%= @gssapicleanupcredentials %>
-<% end -%>
-
-<% @subsystem.each do |k,v| -%>
-Subsystem <%= k %> <%= v %>
 <% end -%>
 
 #ChallengeResponseAuthentication yes
@@ -41,3 +36,12 @@ Subsystem <%= k %> <%= v %>
 AcceptEnv <%= a %>
 <% end -%>
 
+<%-
+    @valid_keywords.map do |kw|
+      next if scope[kw.downcase] == :undef
+      next if scope[kw.downcase] == nil
+-%>
+<%= [kw,scope[kw.downcase]].join(' ') %>
+<%-
+    end
+-%>
