@@ -18,11 +18,12 @@ class ssh::server(
   include ssh::server::config
   include ssh::params
 
-  $ssh_service     = $ssh::params::ssh_service
-  $ssh_packages    = $ssh::params::ssh_pckages
-  $sshd_config     = $ssh::params::sshd_config
-  $needs_install   = $ssh::params::needs_install
-  $root_group      = $ssh::params::root_group
+  $ssh_service        = $ssh::params::ssh_service
+  $ssh_packages       = $ssh::params::ssh_pckages
+  $sshd_config        = $ssh::params::sshd_config
+  $needs_install      = $ssh::params::needs_install
+  $root_group         = $ssh::params::root_group
+  $service_hasrestart = $ssh::params::service_hasrestart
 
   concat { $sshd_config:
     owner   => '0',
@@ -45,7 +46,7 @@ class ssh::server(
     name       => $ssh_service,
     enable     => true,
     hasstatus  => true,
-    hasrestart => true,
+    hasrestart => $service_hasrestart,
   }
 
   file { $ssh::params::ssh_dir:
