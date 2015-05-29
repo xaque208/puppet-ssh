@@ -18,7 +18,8 @@ class ssh::server::config (
   $subsystem                = {},
   $has_pam                  = false,
   $has_gssapi               = false,
-){
+  $acceptenv                = undef,
+) {
 
   $sshd_config   = $ssh::params::sshd_config
 
