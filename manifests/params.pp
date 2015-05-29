@@ -61,4 +61,9 @@ class ssh::params {
       fail("module ${module_name} does not support ${::operatingsystem}")
     }
   }
+
+  $service_hasrestart =  $::kernel ? {
+    'Darwin' => false,
+    default  => true,
+  }
 }
