@@ -1,6 +1,6 @@
 # Puppet powered SSH config
 
-[![Build Status](https://travis-ci.org/xaque208/puppet-ssh.png)](https://travis-ci.org/xaque208/puppet-ssh)
+[![Build Status](https://travis-ci.org/xaque208/puppet-ssh.svg?branch=master)](https://travis-ci.org/xaque208/puppet-ssh)
 
 A Puppet module for managing SSH server configurations.
 
