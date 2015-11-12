@@ -80,7 +80,6 @@ class ssh::server::config (
   $xauthlocation                   = undef,
 
   $log_level                = 'INFO', # underscore here because puppet
-
   $has_pam                  = false,
   $has_gssapi               = false,
   $acceptenv                = undef,

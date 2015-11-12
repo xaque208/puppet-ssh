@@ -1,37 +1,4 @@
-
-Port <%= @port %>
-Protocol <%= @protocol %>
-UsePrivilegeSeparation <%= @useprivilegeseparation %>
-
-# Logging
-SyslogFacility <%= @syslogfacility.upcase %>
 LogLevel <%= @log_level.upcase %>
-
-# Authentication:
-
-#LoginGraceTime 2m
-PermitRootLogin <%= @permitrootlogin %>
-#StrictModes yes
-#MaxAuthTries 6
-#MaxSessions 10
-
-RSAAuthentication no
-PubkeyAuthentication yes
-
-#PasswordAuthentication <%= @passwordauthentication %>
-#PermitEmptyPasswords <%= @permitemptypasswords %>
-
-<% if @has_pam -%>
-UsePAM <%= @usepam %>
-<% end -%>
-
-<% if @has_gssapi -%>
-GSSAPIAuthentication <%= @gssapiauthentication %>
-GSSAPICleanupCredentials <%= @gssapicleanupcredentials %>
-<% end -%>
-
-#ChallengeResponseAuthentication yes
-
 <% Array(@acceptenv).each do |a| -%>
 AcceptEnv <%= a %>
 <% end -%>
