@@ -1,7 +1,5 @@
 # Class: ssh::params
 #
-# Sets varables for the SSH class
-#
 class ssh::params {
 
   $ssh_dir     = '/etc/ssh'
