@@ -1,6 +1,6 @@
 {
   "name": "zleslie-ssh",
-  "version": "0.0.2",
+  "version": "0.1.2",
   "author": "zleslie",
   "summary": "Puppet ssh management module",
   "license": "Apache-2.0",
