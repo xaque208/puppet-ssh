@@ -43,7 +43,6 @@ class ssh::server::config (
   $keyregenerationinterval         = undef,
   $listenaddress                   = undef,
   $logingracetime                  = undef,
-  $log_level                       = undef,
   $macs                            = undef,
   $maxauthtries                    = undef,
   $maxsessions                     = undef,
