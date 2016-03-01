@@ -7,8 +7,11 @@ AcceptEnv <%= a %>
     @valid_keywords.map do |kw|
       next if scope[kw.downcase] == :undef
       next if scope[kw.downcase] == nil
+
+      key = kw
+      value = Array(scope[kw.downcase]).join(',')
 -%>
-<%= [kw,scope[kw.downcase]].join(' ') %>
+<%= [key,value].join(' ') %>
 <%-
     end
 -%>

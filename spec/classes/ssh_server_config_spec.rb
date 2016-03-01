@@ -91,7 +91,14 @@ describe 'ssh::server::config' do
   valid_keywords.each {|kw|
     context "with #{kw.downcase} set" do
       let(:params) { {kw.downcase.to_sym => String.new()} }
-      it { should contain_concat__fragment('sshd_config').with_content(/^#{kw}/) }
+      it { should contain_concat__fragment('sshd_config').with_content(/^#{kw} .*$/) }
     end
   }
+
+  context 'with ciphers => []' do
+    let(:params) { {:ciphers => ['chacha20-poly1305@openssh.com', 'aes256-ctr']} }
+
+    it { should contain_concat__fragment('sshd_config').with_content(/^Ciphers chacha20-poly1305@openssh.com,aes256-ctr$/) }
+
+  end
 end
