@@ -168,6 +168,7 @@ class ssh::server::config (
     'Subsystem',
   ]
 
+  include ssh::params
   $sshd_config   = $ssh::params::sshd_config
 
   concat::fragment { 'sshd_config':
