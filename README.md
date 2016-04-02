@@ -1,6 +1,6 @@
 # Puppet powered SSH config
 
-[![Build Status](https://travis-ci.org/xaque208/puppet-ssh.svg?branch=master)](https://travis-ci.org/xaque208/puppet-ssh)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/zleslie/ssh.svg)]() [![Build Status](https://travis-ci.org/xaque208/puppet-ssh.svg?branch=master)](https://travis-ci.org/xaque208/puppet-ssh)
 
 A Puppet module for managing OpenSSH servers and configurations.
 
