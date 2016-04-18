@@ -1,26 +1,14 @@
 require 'spec_helper'
 
 describe 'ssh::hosts' do
-  let(:facts) {
-    {
-      :hostname => 'flort',
-      :operatingsystem => 'OpenBSD',
-      :kernel => 'OpenBSD',
-      :concat_basedir => '/dne',
-      :sshdsakey => 'fffffffffffffffffffffff',
-      :sshecdsakey => 'fffffffffffffffffffffffffff',
-      :sshed25519key => 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-      :sshfp_dsa => 'SSHFP 2 1 ffffffffffffffffffffffffffffffffffffffff',
-      :sshfp_ecdsa => 'SSHFP 3 1 ffffffffffffffffffffffffffffffffffffffff',
-      :sshfp_ed25519 => 'SSHFP 4 1 ffffffffffffffffffffffffffffffffffffffff',
-      :sshfp_rsa => 'SSHFP 1 1 ffffffffffffffffffffffffffffffffffffffff',
-    }
-  }
+  on_supported_os.each do |os,facts|
+    let(:facts) { facts }
+    let(:params) { {:host_aliases => ['foo']} }
 
-  it { should contain_class('ssh::hosts') }
+    it { should contain_class('ssh::hosts') }
 
-  it { expect(exported_resources).to contain_sshkey('sshecdsakey-flort') }
-  it { expect(exported_resources).to contain_sshkey('sshed25519key-flort') }
-  it { expect(exported_resources).to contain_sshkey('sshdsakey-flort') }
-
+    it { expect(exported_resources).to contain_sshkey('sshecdsakey-foo') }
+    it { expect(exported_resources).to contain_sshkey('sshed25519key-foo') }
+    it { expect(exported_resources).to contain_sshkey('sshdsakey-foo') }
+  end
 end

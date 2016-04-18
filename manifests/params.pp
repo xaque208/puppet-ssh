@@ -8,10 +8,10 @@ class ssh::params {
   $known_hosts = "${ssh_dir}/ssh_known_hosts"
 
   case $::kernel {
-    'openbsd': {
+    'OpenBSD': {
       $root_group = 'wheel'
     }
-    'freebsd': {
+    'FreeBSD': {
       $root_group = 'wheel'
     }
     default: {
@@ -20,37 +20,37 @@ class ssh::params {
   }
 
   case $::operatingsystem {
-    'centos', 'redhat', 'fedora': {
+    'CentOS', 'RedHat', 'Fedora': {
       $needs_install  = true
       $ssh_packages   = [ 'openssh-clients', 'openssh-server' ]
       $ssh_service    = 'sshd'
     }
-    'sles': {
+    'SLES': {
       $needs_install  = true
       $ssh_packages   = 'openssh'
       $ssh_service    = 'sshd'
     }
-    'ubuntu', 'debian': {
+    'Ubuntu', 'Debian': {
       $needs_install  = true
       $ssh_packages   = [ 'openssh-client', 'openssh-server' ]
       $ssh_service    = 'ssh'
     }
-    'darwin': {
+    'Darwin': {
       $needs_install = false
       $ssh_packages  = undef
       $ssh_service   = 'com.openssh.sshd'
     }
-    'freebsd': {
+    'FreeBSD': {
       $needs_install = false
       $ssh_packages  = undef
       $ssh_service   = 'sshd'
     }
-    'openbsd': {
+    'OpenBSD': {
       $needs_install = false
       $ssh_packages  = undef
       $ssh_service   = 'sshd'
     }
-    'solaris','sunos': {
+    'Solaris','SunOS': {
       $needs_install  = true
       $ssh_packages   = 'network/ssh'
       $ssh_service    = 'ssh'

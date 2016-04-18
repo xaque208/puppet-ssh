@@ -8,6 +8,9 @@ class ssh::install (
   $ssh_packages  = $ssh::params::ssh_packages,
 ) inherits ssh::params {
 
+  validate_re($ensure, ['present', 'absent', 'latest'])
+  validate_bool($needs_install)
+
   if $needs_install == true {
     package { $ssh_packages:
       ensure => $ensure,
