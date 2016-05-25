@@ -40,6 +40,7 @@ define ssh::allowgroup (
   }
 
   concat::fragment { "sshd_config_AllowGroups-${name}":
+    order   => '20',
     target  => $sshd_config,
     content => "AllowGroups ${name}\n",
   }
