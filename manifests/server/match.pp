@@ -105,6 +105,7 @@ define ssh::server::match (
   ]
 
   concat::fragment { "sshd_config_match-${name}":
+    order   => '30',
     target  => $sshd_config,
     content => template('ssh/sshd_config-match.erb'),
   }
