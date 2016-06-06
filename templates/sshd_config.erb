@@ -1,7 +1,4 @@
 LogLevel <%= @log_level.upcase %>
-<% Array(@acceptenv).each do |a| -%>
-AcceptEnv <%= a %>
-<% end -%>
 
 <%-
     @valid_keywords.map do |kw|
@@ -9,7 +6,11 @@ AcceptEnv <%= a %>
       next if scope[kw.downcase] == nil
 
       key = kw
-      value = Array(scope[kw.downcase]).join(',')
+      if @space_separated_keywords.include? key
+        value = Array(scope[kw.downcase]).join(' ')
+      else
+        value = Array(scope[kw.downcase]).join(',')
+      end
 -%>
 <%= [key,value].join(' ') %>
 <%-
