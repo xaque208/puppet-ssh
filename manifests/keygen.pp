@@ -1,6 +1,11 @@
-# Define: ssh::keygen
+# This define handles generation of SSH keys through the use of the
+# ssh-keygen(8) command.
 #
-# Creates an SSH keypair at the target location.
+# @example
+#   ssh::keygen { 'Root RSA':
+#     type => 'rsa',
+#     size => 4096
+#   }
 #
 define ssh::keygen (
   String $type       = 'rsa',
