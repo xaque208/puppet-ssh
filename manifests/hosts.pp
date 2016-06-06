@@ -1,14 +1,17 @@
-# Class: ssh::hosts
+# This class distributes public SSH host keys through the user of exported
+# resources, and optionally collects ssh host keys other systems.
 #
-# Distribute ssh-dss host keys from all hosts to all hosts.
+# @example
+#   include ssh::hosts
 #
 class ssh::hosts (
-  $host_aliases = [$trusted['certname'], $trusted['hostname']],
+  Array $host_aliases   = [$trusted['certname'], $trusted['hostname']],
+  Boolean $collect_keys = true,
 ){
 
   validate_array($host_aliases)
 
-  if $::sshdsakey {
+  if $facts['sshdsakey'] {
     @@sshkey { "sshdsakey-${::hostname}":
       host_aliases => $host_aliases,
       type         => 'ssh-dss',
@@ -16,7 +19,7 @@ class ssh::hosts (
     }
   }
 
-  if $::sshecdsakey {
+  if $facts['sshecdsakey'] {
     @@sshkey { "sshecdsakey-${::hostname}":
       host_aliases => $host_aliases,
       type         => 'ecdsa-sha2-nistp256',
@@ -24,7 +27,7 @@ class ssh::hosts (
     }
   }
 
-  if $::sshed25519key {
+  if $facts['sshed25519key'] {
     @@sshkey { "sshed25519key-${::hostname}":
       host_aliases => $host_aliases,
       type         => 'ssh-ed25519',
@@ -32,5 +35,7 @@ class ssh::hosts (
     }
   }
 
-  Sshkey <<| |>>
+  if $collect_keys {
+    Sshkey <<| |>>
+  }
 }
