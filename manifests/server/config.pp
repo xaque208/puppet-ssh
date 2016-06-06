@@ -4,6 +4,7 @@
 # through sshd_config(5) from a template.
 #
 class ssh::server::config (
+  $acceptenv                       = undef,
   $addressfamily                   = undef,
   $allowagentforwarding            = undef,
   $allowtcpforwarding              = undef,
@@ -81,10 +82,10 @@ class ssh::server::config (
   $log_level                = 'INFO', # underscore here because puppet
   $has_pam                  = false,
   $has_gssapi               = false,
-  $acceptenv                = undef,
 ) {
 
   $valid_keywords = [
+    'AcceptEnv',
     'AddressFamily',
     'AllowAgentForwarding',
     'AllowTcpForwarding',
@@ -159,6 +160,13 @@ class ssh::server::config (
     'X11Forwarding',
     'X11UseLocalhost',
     'XAuthLocation',
+  ]
+
+  $space_separated_keywords = [
+    'AcceptEnv',
+    'AuthorizedKeysFile',
+    'DenyGroups',
+    'DenyUsers',
   ]
 
   # Keywords that are configured with their own defined type.
