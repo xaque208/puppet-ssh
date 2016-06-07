@@ -34,6 +34,12 @@
         "8",
         "7"
       ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
     }
   ],
   "description": "A Puppet module to configure OpenSSH servers",
