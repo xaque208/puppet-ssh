@@ -19,7 +19,7 @@ class ssh::server(
   include ssh::params
 
   $ssh_service        = $ssh::params::ssh_service
-  $ssh_packages       = $ssh::params::ssh_pckages
+  $ssh_packages       = $ssh::params::ssh_packages
   $sshd_config        = $ssh::params::sshd_config
   $needs_install      = $ssh::params::needs_install
   $root_group         = $ssh::params::root_group
