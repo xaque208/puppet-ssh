@@ -84,6 +84,8 @@ class ssh::server::config (
   $has_gssapi               = false,
 ) {
 
+  include ssh
+
   $valid_keywords = [
     'AcceptEnv',
     'AddressFamily',
@@ -162,6 +164,9 @@ class ssh::server::config (
     'XAuthLocation',
   ]
 
+
+  # Keywords that are joined by spaces in the presence of multiple
+  # values
   $space_separated_keywords = [
     'AcceptEnv',
     'AuthorizedKeysFile',
@@ -176,12 +181,9 @@ class ssh::server::config (
     'Subsystem',
   ]
 
-  include ssh::params
-  $sshd_config   = $ssh::params::sshd_config
-
   concat::fragment { 'sshd_config':
     order   => '10',
-    target  => $sshd_config,
+    target  => $ssh::sshd_config,
     content => template('ssh/sshd_config.erb'),
   }
 }

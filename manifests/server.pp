@@ -1,32 +1,17 @@
-# Class: ssh::server
+# This class handles the configuration and servic ehandling for the SSH
+# daemon.  The configuration parameters for sshd(8) are handled through the
+# ssh::server::config class.
 #
-# This class installs and manages SSH servers
+# @example
+#   include ssh::server
 #
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-class ssh::server(
-) {
-
+class ssh::server {
   include ssh
   include ssh::install
   include ssh::server::config
-  include ssh::params
 
-  $ssh_service        = $ssh::params::ssh_service
-  $ssh_packages       = $ssh::params::ssh_packages
-  $sshd_config        = $ssh::params::sshd_config
-  $needs_install      = $ssh::params::needs_install
-  $root_group         = $ssh::params::root_group
-  $service_hasrestart = $ssh::params::service_hasrestart
-
-  concat { $sshd_config:
-    owner   => '0',
+  concat { $ssh::sshd_config:
+    owner   => 'root',
     group   => '0',
     mode    => '0640',
     require => Class['ssh::install'],
@@ -35,7 +20,7 @@ class ssh::server(
 
   concat::fragment { 'sshd_config-header':
     order   => '00',
-    target  => $sshd_config,
+    target  => $ssh::sshd_config,
     content => template('ssh/sshd_config-header.erb'),
   }
 
@@ -43,20 +28,20 @@ class ssh::server(
 
   service { 'sshd':
     ensure     => running,
-    name       => $ssh_service,
+    name       => $ssh::ssh_service,
     enable     => true,
     hasstatus  => true,
-    hasrestart => $service_hasrestart,
+    hasrestart => $ssh::service_hasrestart,
   }
 
-  file { $ssh::params::ssh_dir:
+  file { $ssh::ssh_dir:
     ensure => directory,
     owner  => 'root',
     group  => '0',
     mode   => '0755',
   }
 
-  file { $ssh::params::known_hosts:
+  file { $ssh::known_hosts:
     ensure => present,
     owner  => 'root',
     group  => '0',

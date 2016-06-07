@@ -7,10 +7,9 @@ define ssh::allowgroup (
   $tcpforwarding = false
 ) {
 
-  include ssh::params
   include ssh::server
 
-  $sshd_config = $ssh::params::sshd_config
+  $sshd_config = $ssh::sshd_config
 
   if $chroot == true {
     include ssh::chroot

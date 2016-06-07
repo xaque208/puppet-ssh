@@ -1,0 +1,6 @@
+---
+ssh::ssh_packages:
+  - 'openssh-clients'
+  - 'openssh-server'
+ssh::ssh_service: 'sshd'
+

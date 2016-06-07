@@ -1,0 +1,4 @@
+---
+ssh::root_group: 'wheel'
+ssh::ssh_packages: []
+ssh::ssh_service: 'sshd'

@@ -1,18 +1,15 @@
-# Class: ssh::install
-#
-# Install the OpenSSH client and server packages.
+# This class handles the installation and removal of the SSH packages if any
+# are present.
 #
 class ssh::install (
-  $ensure        = 'latest',
-  $needs_install = $ssh::params::needs_install,
-  $ssh_packages  = $ssh::params::ssh_packages,
-) inherits ssh::params {
+  $ensure = 'present',
+) {
 
   validate_re($ensure, ['present', 'absent', 'latest'])
-  validate_bool($needs_install)
+  include ssh
 
-  if $needs_install == true {
-    package { $ssh_packages:
+   if size($ssh::ssh_packages) > 0 {
+    package { $ssh::ssh_packages:
       ensure => $ensure,
       notify => Service['sshd'],
     }

@@ -1,0 +1,3 @@
+---
+ssh::ssh_packages: ['openssh']
+ssh::ssh_service: 'sshd'
