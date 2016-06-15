@@ -52,6 +52,6 @@ class ssh::server {
   $permitrootlogin = $ssh::server::config::permitrootlogin
 
   if $permitrootlogin != 'no' {
-    ssh::allowgroup { $root_group: }
+    ssh::allowgroup { $ssh::root_group: }
   }
 }
