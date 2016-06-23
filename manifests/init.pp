@@ -19,7 +19,7 @@ class ssh (
   String $ssh_config,
   String $known_hosts,
   String $root_group,
-  String $service_hasrestart,
+  Boolean $service_hasrestart,
   Array $ssh_packages,
 ){
 
