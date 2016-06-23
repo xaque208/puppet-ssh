@@ -4,4 +4,4 @@ ssh::sshd_config: '/etc/ssh/sshd_config'
 ssh::ssh_config: '/etc/ssh/ssh_config'
 ssh::known_hosts: '/etc/ssh/ssh_known_hosts'
 ssh::root_group: 'root'
-ssh_service::service_hasrestart: true
+ssh::service_hasrestart: true
