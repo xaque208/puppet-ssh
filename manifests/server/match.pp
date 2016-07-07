@@ -13,6 +13,7 @@
 #   }
 #
 define ssh::server::match (
+  $acceptenv                       = undef,
   $allowagentforwarding            = undef,
   $allowgroups                     = undef,
   $allowtcpforwarding              = undef,
@@ -63,6 +64,7 @@ define ssh::server::match (
   ]
 
   $valid_keywords = [
+    'AcceptEnv',
     'AllowAgentForwarding',
     'AllowGroups',
     'AllowTcpForwarding',
@@ -99,6 +101,15 @@ define ssh::server::match (
     'X11DisplayOffset',
     'X11Forwarding',
     'X11UseLocalHost'
+  ]
+
+  # Keywords that are joined by spaces in the presence of multiple
+  # values
+  $space_separated_keywords = [
+    'AcceptEnv',
+    'AuthorizedKeysFile',
+    'DenyGroups',
+    'DenyUsers',
   ]
 
   concat::fragment { "sshd_config_match-${name}":

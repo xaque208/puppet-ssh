@@ -1,10 +1,16 @@
 Match <%= @name %>
 <%-
-  @valid_keywords.map do |kw|
-    next if scope[kw.downcase] == :undef
-    next if scope[kw.downcase] == nil
+    @valid_keywords.map do |key|
+      next if scope[key.downcase] == :undef
+      next if scope[key.downcase] == nil
+
+      if @space_separated_keywords.include? key
+        value = Array(scope[key.downcase]).join(' ')
+      else
+        value = Array(scope[key.downcase]).join(',')
+      end
 -%>
-  <%= [kw,scope[kw.downcase]].join(' ') %>
+  <%= [key,value].join(' ') %>
 <%-
   end
 -%>
