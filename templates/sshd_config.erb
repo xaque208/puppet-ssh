@@ -1,15 +1,14 @@
 LogLevel <%= @log_level.upcase %>
 
 <%-
-    @valid_keywords.map do |kw|
-      next if scope[kw.downcase] == :undef
-      next if scope[kw.downcase] == nil
+    @valid_keywords.map do |key|
+      next if scope[key.downcase] == :undef
+      next if scope[key.downcase] == nil
 
-      key = kw
       if @space_separated_keywords.include? key
-        value = Array(scope[kw.downcase]).join(' ')
+        value = Array(scope[key.downcase]).join(' ')
       else
-        value = Array(scope[kw.downcase]).join(',')
+        value = Array(scope[key.downcase]).join(',')
       end
 -%>
 <%= [key,value].join(' ') %>
