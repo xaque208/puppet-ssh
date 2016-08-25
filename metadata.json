@@ -1,6 +1,6 @@
 {
   "name": "zleslie-ssh",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "zleslie",
   "summary": "Puppet ssh management module",
   "license": "Apache-2.0",
@@ -39,6 +39,12 @@
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "7"
+      ]
+    },
+    {
+      "operatingsystem": "Archlinux",
+      "operatingsystemrelease": [
+        "4.7"
       ]
     }
   ],
