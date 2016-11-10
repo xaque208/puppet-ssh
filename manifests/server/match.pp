@@ -94,6 +94,7 @@ define ssh::server::match (
     'PermitTTY',
     'PermitTunnel',
     'PermitUserRC',
+    'PubkeyAcceptedKeyTypes',
     'PubkeyAuthentication',
     'RekeyLimit',
     'RhostsRSAAuthentication',
