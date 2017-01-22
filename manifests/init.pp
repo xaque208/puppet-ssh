@@ -17,6 +17,7 @@ class ssh (
   String $ssh_dir,
   String $sshd_config,
   String $ssh_config,
+  String $ssh_service,
   String $known_hosts,
   String $root_group,
   Boolean $service_hasrestart,
