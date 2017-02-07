@@ -50,6 +50,7 @@ define ssh::server::match (
   $x11displayoffset                = undef,
   $x11forwarding                   = undef,
   $x11uselocalhost                 = undef,
+  Integer[30, 99] $order           = 30,
 ) {
 
   include ssh::server
@@ -114,7 +115,7 @@ define ssh::server::match (
   ]
 
   concat::fragment { "sshd_config_match-${name}":
-    order   => '30',
+    order   => $order,
     target  => $ssh::sshd_config,
     content => template('ssh/sshd_config-match.erb'),
   }
