@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'ssh::server::match' do
-  on_supported_os.each do |os,facts|
+  on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
 
@@ -9,36 +9,29 @@ describe 'ssh::server::match' do
       when 'OpenBSD'
         let(:title) { 'Group nerds' }
         it do
-          should contain_class('ssh::server')
-          should contain_concat__fragment('sshd_config_match-Group nerds').with({
-            :target => '/etc/ssh/sshd_config',
-            :content => /^Match Group nerds$/,
-          })
+          is_expected.to contain_class('ssh::server')
+          is_expected.to contain_concat__fragment('sshd_config_match-Group nerds').with(target: '/etc/ssh/sshd_config',
+                                                                                        content: %r{^Match Group nerds$})
         end
-      else
       end
 
       context 'with order set' do
         let(:title) { 'Group nerds' }
-        let(:params) {
+        let(:params) do
           {
-            :order => 31
+            order: 31
           }
-        }
+        end
         case facts[:osfamily]
         when 'OpenBSD'
           it do
-            should contain_class('ssh::server')
-            should contain_concat__fragment('sshd_config_match-Group nerds').with({
-              :target => '/etc/ssh/sshd_config',
-              :content => /^Match Group nerds$/,
-              :order => 31,
-            })
+            is_expected.to contain_class('ssh::server')
+            is_expected.to contain_concat__fragment('sshd_config_match-Group nerds').with(target: '/etc/ssh/sshd_config',
+                                                                                          content: %r{^Match Group nerds$},
+                                                                                          order: 31)
           end
-        else
         end
       end
-
     end
   end
 end

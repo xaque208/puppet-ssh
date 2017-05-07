@@ -12,8 +12,8 @@ define ssh::server::subsystem (
   $system,
 ) {
 
-  include ssh
-  include ssh::server
+  include ::ssh
+  include ::ssh::server
 
   concat::fragment { "sshd_config-subsystem-${name}":
     target  => $ssh::sshd_config,

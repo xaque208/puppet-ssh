@@ -37,5 +37,6 @@ function ssh::validate_key_size(
     'rsa1': {
       $size_final = $size
     }
+    default: {}
   }
 }

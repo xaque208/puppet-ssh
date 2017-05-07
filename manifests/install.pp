@@ -6,9 +6,9 @@ class ssh::install (
 ) {
 
   validate_re($ensure, ['present', 'absent', 'latest'])
-  include ssh
+  include ::ssh
 
-   if size($ssh::ssh_packages) > 0 {
+  if size($ssh::ssh_packages) > 0 {
     package { $ssh::ssh_packages:
       ensure => $ensure,
       notify => Service['sshd'],
