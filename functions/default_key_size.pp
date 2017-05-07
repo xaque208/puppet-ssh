@@ -17,5 +17,6 @@ function ssh::default_key_size (
     'rsa1': {
       2048
     }
+    default: {}
   }
 }

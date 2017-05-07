@@ -53,7 +53,7 @@ define ssh::server::match (
   Integer[30, 99] $order           = 30,
 ) {
 
-  include ssh::server
+  include ::ssh::server
 
   $valid_token = [
     'User',
@@ -102,7 +102,7 @@ define ssh::server::match (
     'RSAAuthentication',
     'X11DisplayOffset',
     'X11Forwarding',
-    'X11UseLocalHost'
+    'X11UseLocalHost',
   ]
 
   # Keywords that are joined by spaces in the presence of multiple

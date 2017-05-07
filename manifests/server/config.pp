@@ -86,7 +86,7 @@ class ssh::server::config (
   $has_gssapi               = false,
 ) {
 
-  include ssh
+  include ::ssh
 
   $valid_keywords = [
     'AcceptEnv',

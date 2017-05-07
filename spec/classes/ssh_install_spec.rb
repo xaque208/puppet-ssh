@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'ssh::install' do
-  on_supported_os.each do |os,facts|
+  on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
 
@@ -18,9 +18,7 @@ describe 'ssh::install' do
         it { is_expected.to contain_package('network/ssh') }
       when 'Suse'
         it { is_expected.to contain_package('openssh') }
-      else
       end
     end
-
   end
 end
