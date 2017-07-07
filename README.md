@@ -70,7 +70,7 @@ Here is an example of how the options might be set for an SSH server daemon.
 ```yaml
 ssh::server::config::has_pam: 'yes'
 ssh::server::config::usepam: 'yes'
-ssh::server::config::authenticationmethods: 'pubkey,keyboard-interactive'
+ssh::server::config::authenticationmethods: 'publickey,keyboard-interactive'
 ```
 
 Note that the options as passed to the `ssh::server::config` class are lower
