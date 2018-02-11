@@ -78,7 +78,6 @@ describe 'ssh::server::config' do
         UseDNS
         UseLogin
         UsePAM
-        UsePrivilegeSeparation
         VersionAddendum
         X11DisplayOffset
         X11Forwarding

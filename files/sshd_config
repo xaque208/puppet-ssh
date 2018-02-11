@@ -19,7 +19,6 @@ StrictModes yes
 UseDNS yes
 IgnoreRhosts yes
 LogLevel INFO
-UsePrivilegeSeparation yes
 PermitEmptyPasswords no
 RhostsRSAAuthentication no
 PubkeyAuthentication yes
