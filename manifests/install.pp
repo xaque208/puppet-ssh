@@ -11,7 +11,6 @@ class ssh::install (
   if size($ssh::ssh_packages) > 0 {
     package { $ssh::ssh_packages:
       ensure => $ensure,
-      notify => Service['sshd'],
     }
   }
 }

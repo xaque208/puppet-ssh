@@ -15,13 +15,19 @@ class ssh::server {
     group   => '0',
     mode    => '0640',
     require => Class['ssh::install'],
-    notify  => Service['sshd'],
+    notify  => Service[$ssh::ssh_service],
   }
 
   concat::fragment { 'sshd_config-header':
     order   => '00',
     target  => $ssh::sshd_config,
     content => template('ssh/sshd_config-header.erb'),
+  }
+
+  if size($ssh::ssh_packages) > 0 {
+    Service {
+      subscribe => Package[$::ssh::ssh_packages],
+    }
   }
 
   service { 'sshd':

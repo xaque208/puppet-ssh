@@ -8,6 +8,7 @@ describe 'ssh::server::match' do
       case facts[:osfamily]
       when 'OpenBSD'
         let(:title) { 'Group nerds' }
+
         it do
           is_expected.to contain_class('ssh::server')
           is_expected.to contain_concat__fragment('sshd_config_match-Group nerds').with(target: '/etc/ssh/sshd_config',
@@ -22,6 +23,7 @@ describe 'ssh::server::match' do
             order: 31
           }
         end
+
         case facts[:osfamily]
         when 'OpenBSD'
           it do
