@@ -13,6 +13,7 @@ describe 'ssh::keygen' do
           target: '/root/.ssh/id_rsa'
         }
       end
+
       it do
         is_expected.to contain_exec('Generate rsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t rsa -b 2048 -N "" -f /root/.ssh/id_rsa')
       end
@@ -25,6 +26,7 @@ describe 'ssh::keygen' do
             target: '/root/.ssh/id_rsa'
           }
         end
+
         it { is_expected.to raise_error(Puppet::Error, %r{"asd" does not match}) }
       end
 
@@ -35,6 +37,7 @@ describe 'ssh::keygen' do
             size: 512
           }
         end
+
         it { is_expected.to raise_error(Puppet::Error, %r{RSA keys must be at least 768 bits}) }
       end
 
@@ -45,6 +48,7 @@ describe 'ssh::keygen' do
             size: 512
           }
         end
+
         it do
           is_expected.to contain_exec('Generate ed25519 SSH key for Root').with(command: '/usr/bin/ssh-keygen -t ed25519 -N "" -f /root/.ssh/id_ed25519')
           is_expected.to contain_notify('SSH ed25519 keys have a fixed length, size ignored')
@@ -58,6 +62,7 @@ describe 'ssh::keygen' do
             size: 512
           }
         end
+
         it { is_expected.to raise_error(Puppet::Error, %r{ECDSA keys may only be of length 256, 384, or 521}) }
       end
 
@@ -68,6 +73,7 @@ describe 'ssh::keygen' do
             size: 512
           }
         end
+
         it { is_expected.to contain_notify('Only SSH dsa keys of 1024 size are valid, proceeding as such') }
         it do
           is_expected.to contain_exec('Generate dsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t dsa -b 1024 -N "" -f /root/.ssh/id_dsa')
@@ -80,6 +86,7 @@ describe 'ssh::keygen' do
             type: 'dsa'
           }
         end
+
         it do
           is_expected.to contain_exec('Generate dsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t dsa -b 1024 -N "" -f /root/.ssh/id_dsa')
         end

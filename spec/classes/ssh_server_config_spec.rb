@@ -4,9 +4,10 @@ describe 'ssh::server::config' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
+
       it { is_expected.to contain_class('ssh::server::config') }
 
-      valid_keywords = %w(
+      valid_keywords = %w[
         AcceptEnv
         AddressFamily
         AllowAgentForwarding
@@ -83,20 +84,21 @@ describe 'ssh::server::config' do
         X11Forwarding
         X11UseLocalhost
         XAuthLocation
-      )
+      ]
 
-      space_separated_keywords = %w(
+      space_separated_keywords = %w[
         AcceptEnv
         AuthorizedKeysFile
         DenyGroups
         DenyUsers
-      )
+      ]
 
       it "should validate space separated keywords #{space_separated_keywords}"
 
       valid_keywords.each do |kw|
         context "with #{kw.downcase} set" do
           let(:params) { { kw.downcase.to_sym => '' } }
+
           it { is_expected.to contain_concat__fragment('sshd_config').with_content(%r{^#{kw} .*$}) }
         end
       end
@@ -114,13 +116,13 @@ describe 'ssh::server::config' do
       end
 
       context 'with denyusers => []' do
-        let(:params) { { denyusers: %w(test1 test2) } }
+        let(:params) { { denyusers: %w[test1 test2] } }
 
         it { is_expected.to contain_concat__fragment('sshd_config').with_content(%r{^DenyUsers test1 test2$}) }
       end
 
       context 'with denygroups => []' do
-        let(:params) { { denygroups: %w(test1 test2) } }
+        let(:params) { { denygroups: %w[test1 test2] } }
 
         it { is_expected.to contain_concat__fragment('sshd_config').with_content(%r{^DenyGroups test1 test2$}) }
       end

@@ -9,6 +9,7 @@ describe 'ssh::server::subsystem' do
       when 'OpenBSD'
         let(:title) { 'sftp' }
         let(:params) { { system: 'internal-sftp' } }
+
         it do
           is_expected.to contain_concat__fragment('sshd_config-subsystem-sftp').with_content(%r{Subsystem sftp internal-sftp})
         end
