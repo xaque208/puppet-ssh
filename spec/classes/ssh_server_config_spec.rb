@@ -27,6 +27,7 @@ describe 'ssh::server::config' do
         Compression
         DenyGroups
         DenyUsers
+        ExposeAuthInfo
         ForceCommand
         GatewayPorts
         GSSAPIAuthentication

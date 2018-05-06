@@ -27,7 +27,7 @@ describe 'ssh::keygen' do
           }
         end
 
-        it { is_expected.to raise_error(Puppet::Error, %r{"asd" does not match}) }
+        it { is_expected.to raise_error(Puppet::PreformattedError, %r{Enum}) }
       end
 
       context 'when bad key size is passed' do

@@ -43,6 +43,7 @@ define ssh::server::match (
   $permittty                       = undef,
   $permittunnel                    = undef,
   $permituserrc                    = undef,
+  $pubkeyacceptedkeytypes          = undef,
   $pubkeyauthentication            = undef,
   $rekeylimit                      = undef,
   $rhostsrsaauthentication         = undef,
@@ -51,6 +52,8 @@ define ssh::server::match (
   $x11forwarding                   = undef,
   $x11uselocalhost                 = undef,
   Integer[30, 99] $order           = 30,
+
+  $log_level                = 'INFO', # underscore here because puppet
 ) {
 
   include ::ssh::server
@@ -86,6 +89,7 @@ define ssh::server::match (
     'HostbasedUsesNameFromPacketOnly',
     'KbdInteractiveAuthentication',
     'KerberosAuthentication',
+    #'LogLevel',
     'MaxAuthTries',
     'MaxSessions',
     'PasswordAuthentication',

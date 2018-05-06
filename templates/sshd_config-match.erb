@@ -1,4 +1,7 @@
 Match <%= @name %>
+<% if @log_level -%>
+  LogLevel <%= @log_level.upcase %>
+<% end -%>
 <%-
     @valid_keywords.map do |key|
       next if scope[key.downcase] == :undef
