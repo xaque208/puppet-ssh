@@ -2,13 +2,12 @@
 # are present.
 #
 class ssh::install (
-  $ensure = 'present',
+  Enum['present', 'absent', 'latest'] $ensure = 'present',
 ) {
 
-  validate_re($ensure, ['present', 'absent', 'latest'])
   include ::ssh
 
-  if size($ssh::ssh_packages) > 0 {
+  if length($ssh::ssh_packages) > 0 {
     package { $ssh::ssh_packages:
       ensure => $ensure,
     }

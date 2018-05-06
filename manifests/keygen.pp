@@ -8,13 +8,11 @@
 #   }
 #
 define ssh::keygen (
-  String $type       = 'rsa',
-  Integer $size      = 0,
-  String $passphrase = '',
-  String $target     = '',
+  Enum['dsa', 'ecdsa', 'ed25519', 'rsa', 'rsa1'] $type = 'rsa',
+  Integer $size                                        = 0,
+  String $passphrase                                   = '',
+  String $target                                       = '',
 ) {
-
-  validate_re($type, ['dsa', 'ecdsa', 'ed25519', 'rsa', 'rsa1'])
 
   if $size == 0 {
     $size_final = ssh::default_key_size($type)
