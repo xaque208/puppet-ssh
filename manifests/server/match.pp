@@ -53,7 +53,7 @@ define ssh::server::match (
   $x11uselocalhost                 = undef,
   Integer[30, 99] $order           = 30,
 
-  $log_level                = 'INFO', # underscore here because puppet
+  Optional[String] $log_level      = undef, # underscore here because puppet
 ) {
 
   include ::ssh::server
