@@ -54,7 +54,7 @@ describe 'ssh::server::match' do
       valid_keywords.each do |kw|
         context "with #{kw.downcase} set" do
           case kw.downcase
-          when 'LogLevel'
+          when 'loglevel'
             let(:params) { { log_level: 'INFO' } }
           else
             let(:params) { { kw.downcase.to_sym => '' } }
