@@ -51,6 +51,32 @@ ssh::keygen { 'Root ECDSA':
 Optionally, users may also specify a `target`, which will modify the
 `ssh-keygen` command to write the resulting data to the given file.
 
+### ssh::client
+
+Manage the `ssh_config(5)` file.  See also the `ssh::client::config` class.
+
+```Puppet
+include ssh::config
+```
+
+The `ssh_config(5)` options available are configured in one of two ways.
+Either the values for the desired options are managed through the use of the
+`ssh::client::config` class (which you can use `hiera` to set values on), or
+through defined types of their own.
+
+Here is an example of how the options might be set for an SSH client.
+
+```yaml
+ssh::client::config::forwardagent: 'yes'
+ssh::client::config::verifyhostkeydns: 'yes'
+```
+
+Note that the options as passed to the `ssh::client::config` class are lower
+cased.  The only exception to this is the `LogLevel` parameter which is manged
+through the `log_level` parameter.  This is to avoid the `loglevel`
+meta-parameter for Puppet resources.
+
+
 ### ssh::server
 
 Manage the `sshd_config(5)` file and its daemon, `sshd(8)`.  See also the
