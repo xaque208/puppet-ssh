@@ -26,8 +26,7 @@ class ssh (
 
   include ::ssh::install
 
-  file { $ssh_config:
-    ensure  => file,
+  concat { $ssh_config:
     owner   => 'root',
     group   => '0',
     mode    => '0644',
