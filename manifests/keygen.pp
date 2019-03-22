@@ -9,18 +9,18 @@
 #
 define ssh::keygen (
   Enum['dsa', 'ecdsa', 'ed25519', 'rsa', 'rsa1'] $type = 'rsa',
-  Integer $size                                        = 0,
-  String $passphrase                                   = '',
-  String $target                                       = '',
+  Optional[Integer] $size                              = undef,
+  Optional[String] $passphrase                         = undef,
+  Optional[String] $target                             = undef,
 ) {
 
-  if $size == 0 {
+  if !$size {
     $size_final = ssh::default_key_size($type)
   } else {
     $size_final = ssh::validate_key_size($type, $size)
   }
 
-  if $target == '' {
+  if !$target {
     $target_final = "/root/.ssh/id_${type}"
   } else {
     $target_final = $target
