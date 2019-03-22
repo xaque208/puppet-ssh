@@ -91,6 +91,19 @@ describe 'ssh::keygen' do
           is_expected.to contain_exec('Generate dsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t dsa -b 1024 -N "" -f /root/.ssh/id_dsa')
         end
       end
+
+      context 'with a custom user' do
+        let(:params) do
+          {
+            user: 'charlie'
+          }
+        end
+        let(:title) { 'Charlie' }
+
+        it do
+          is_expected.to contain_exec('Generate rsa SSH key for Charlie').with(user: 'charlie', command: '/usr/bin/ssh-keygen -t rsa -b 2048 -N "" -f /home/charlie/.ssh/id_rsa')
+        end
+      end
     end
   end
 end

@@ -12,6 +12,7 @@ define ssh::keygen (
   Optional[Integer] $size                              = undef,
   Optional[String] $passphrase                         = undef,
   Optional[String] $target                             = undef,
+  String $user                                         = 'root',
 ) {
 
   if !$size {
@@ -21,7 +22,11 @@ define ssh::keygen (
   }
 
   if !$target {
-    $target_final = "/root/.ssh/id_${type}"
+    $user_home = $user ? {
+      'root'  => '/root',
+      default => "/home/${user}",
+    }
+    $target_final = "${user_home}/.ssh/id_${type}"
   } else {
     $target_final = $target
   }
@@ -39,5 +44,6 @@ define ssh::keygen (
   exec { "Generate ${type} SSH key for ${name}":
     command => "/usr/bin/ssh-keygen ${command}",
     creates => "${target_final}.pub",
+    user    => $user,
   }
 }
