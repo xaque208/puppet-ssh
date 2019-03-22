@@ -15,7 +15,7 @@ describe 'ssh::keygen' do
       end
 
       it do
-        is_expected.to contain_exec('Generate rsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t rsa -b 2048 -N "" -f /root/.ssh/id_rsa')
+        is_expected.to contain_exec('Generate rsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t rsa -b 2048 -f /root/.ssh/id_rsa')
       end
 
       context 'when bad key type is passed' do
@@ -50,7 +50,7 @@ describe 'ssh::keygen' do
         end
 
         it do
-          is_expected.to contain_exec('Generate ed25519 SSH key for Root').with(command: '/usr/bin/ssh-keygen -t ed25519 -N "" -f /root/.ssh/id_ed25519')
+          is_expected.to contain_exec('Generate ed25519 SSH key for Root').with(command: '/usr/bin/ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519')
           is_expected.to contain_notify('SSH ed25519 keys have a fixed length, size ignored')
         end
       end
@@ -76,7 +76,7 @@ describe 'ssh::keygen' do
 
         it { is_expected.to contain_notify('Only SSH dsa keys of 1024 size are valid, proceeding as such') }
         it do
-          is_expected.to contain_exec('Generate dsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t dsa -b 1024 -N "" -f /root/.ssh/id_dsa')
+          is_expected.to contain_exec('Generate dsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t dsa -b 1024 -f /root/.ssh/id_dsa')
         end
       end
 
@@ -88,7 +88,19 @@ describe 'ssh::keygen' do
         end
 
         it do
-          is_expected.to contain_exec('Generate dsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t dsa -b 1024 -N "" -f /root/.ssh/id_dsa')
+          is_expected.to contain_exec('Generate dsa SSH key for Root').with(command: '/usr/bin/ssh-keygen -t dsa -b 1024 -f /root/.ssh/id_dsa')
+        end
+      end
+
+      context 'when a passphrase is passed' do
+        let(:params) do
+          {
+            passphrase: 'this is my secret passphrase'
+          }
+        end
+
+        it do
+          is_expected.to contain_exec('Generate rsa SSH key for Root').with(command: %r{-N "this is my secret passphrase"})
         end
       end
 
@@ -101,7 +113,7 @@ describe 'ssh::keygen' do
         let(:title) { 'Charlie' }
 
         it do
-          is_expected.to contain_exec('Generate rsa SSH key for Charlie').with(user: 'charlie', command: '/usr/bin/ssh-keygen -t rsa -b 2048 -N "" -f /home/charlie/.ssh/id_rsa')
+          is_expected.to contain_exec('Generate rsa SSH key for Charlie').with(user: 'charlie', command: '/usr/bin/ssh-keygen -t rsa -b 2048 -f /home/charlie/.ssh/id_rsa')
         end
       end
     end

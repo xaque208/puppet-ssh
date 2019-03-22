@@ -34,7 +34,7 @@ define ssh::keygen (
   $args = [
     $type       ? { default => "-t ${type}" },
     $size_final ? { undef   => undef, default  => "-b ${size_final}" },
-    $passphrase ? { default => "-N \"${passphrase}\"" },
+    $passphrase ? { undef   => undef, default  => "-N \"${passphrase}\"" },
     $target     ? { default => "-f ${target_final}" },
   ]
 
