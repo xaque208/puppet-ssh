@@ -9,19 +9,24 @@
 #
 define ssh::keygen (
   Enum['dsa', 'ecdsa', 'ed25519', 'rsa', 'rsa1'] $type = 'rsa',
-  Integer $size                                        = 0,
-  String $passphrase                                   = '',
-  String $target                                       = '',
+  Optional[Integer] $size                              = undef,
+  Optional[String] $passphrase                         = undef,
+  Optional[String] $target                             = undef,
+  String $user                                         = 'root',
 ) {
 
-  if $size == 0 {
+  if !$size {
     $size_final = ssh::default_key_size($type)
   } else {
     $size_final = ssh::validate_key_size($type, $size)
   }
 
-  if $target == '' {
-    $target_final = "/root/.ssh/id_${type}"
+  if !$target {
+    $user_home = $user ? {
+      'root'  => '/root',
+      default => "/home/${user}",
+    }
+    $target_final = "${user_home}/.ssh/id_${type}"
   } else {
     $target_final = $target
   }
@@ -29,7 +34,7 @@ define ssh::keygen (
   $args = [
     $type       ? { default => "-t ${type}" },
     $size_final ? { undef   => undef, default  => "-b ${size_final}" },
-    $passphrase ? { default => "-N \"${passphrase}\"" },
+    $passphrase ? { undef   => undef, default  => "-N \"${passphrase}\"" },
     $target     ? { default => "-f ${target_final}" },
   ]
 
@@ -39,5 +44,6 @@ define ssh::keygen (
   exec { "Generate ${type} SSH key for ${name}":
     command => "/usr/bin/ssh-keygen ${command}",
     creates => "${target_final}.pub",
+    user    => $user,
   }
 }
