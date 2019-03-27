@@ -7,12 +7,12 @@ define ssh::allowgroup (
   $tcpforwarding = false
 ) {
 
-  include ::ssh::server
+  include ssh::server
 
   $sshd_config = $ssh::sshd_config
 
   if $chroot == true {
-    include ::ssh::chroot
+    include ssh::chroot
     file { "/var/chroot/${name}":
       ensure => directory,
       owner  => root,

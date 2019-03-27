@@ -24,7 +24,7 @@ class ssh (
   Array $ssh_packages,
 ){
 
-  include ::ssh::install
+  include ssh::install
 
   concat { $ssh_config:
     owner   => 'root',

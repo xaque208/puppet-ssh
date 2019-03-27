@@ -96,7 +96,7 @@ class ssh::client::config (
 
   $log_level                       = 'INFO', # underscore here because puppet
 ) {
-  include ::ssh
+  include ssh
 
   $valid_keywords = [
     'IgnoreUnknown', # Keep this at the beginning

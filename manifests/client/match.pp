@@ -106,7 +106,7 @@ define ssh::client::match (
 
   Optional[String] $log_level      = undef, # underscore here because puppet
 ) {
-  include ::ssh::client
+  include ssh::client
 
   $valid_keywords = [
     'IgnoreUnknown', # Keep this at the beginning

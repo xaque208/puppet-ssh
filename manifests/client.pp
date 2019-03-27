@@ -1,6 +1,6 @@
 class ssh::client {
-  include ::ssh
-  include ::ssh::client::config
+  include ssh
+  include ssh::client::config
 
   concat::fragment { 'ssh_config-header':
     order   => '00',
