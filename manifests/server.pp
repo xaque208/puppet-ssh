@@ -6,9 +6,9 @@
 #   include ssh::server
 #
 class ssh::server {
-  include ::ssh
-  include ::ssh::install
-  include ::ssh::server::config
+  include ssh
+  include ssh::install
+  include ssh::server::config
 
   concat { $ssh::sshd_config:
     owner   => 'root',
