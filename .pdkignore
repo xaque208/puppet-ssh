@@ -1,0 +1,7 @@
+.*
+Gemfile*
+Jenkinsfile
+README.md
+Rakefile
+examples/
+spec/
