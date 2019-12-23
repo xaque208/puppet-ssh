@@ -8,15 +8,15 @@ describe 'ssh::hosts' do
 
       it { is_expected.to contain_class('ssh::hosts') }
 
-      if facts.keys.include? :sshecdsakey
+      if facts.dig(:ssh, :ecdsa)
         it { expect(exported_resources).to contain_sshkey('sshecdsakey-foo') }
       end
 
-      if facts.keys.include? :sshdsakey
+      if facts.dig(:ssh, :dsa)
         it { expect(exported_resources).to contain_sshkey('sshdsakey-foo') }
       end
 
-      if facts.keys.include? :sshed25519key
+      if facts.dig(:ssh, :ed25519)
         it { expect(exported_resources).to contain_sshkey('sshed25519key-foo') }
       end
     end
