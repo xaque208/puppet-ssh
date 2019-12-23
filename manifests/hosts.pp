@@ -5,33 +5,31 @@
 #   include ssh::hosts
 #
 class ssh::hosts (
-  Array $host_aliases   = [$trusted['certname'], $trusted['hostname']],
-  Boolean $collect_keys = true,
+  Array[String] $host_aliases = [$trusted['certname'], $trusted['hostname']],
+  Boolean $collect_keys       = true,
 ){
 
-  validate_array($host_aliases)
-
-  if $facts['sshdsakey'] {
-    @@sshkey { "sshdsakey-${::hostname}":
+  if $facts.dig('ssh','dsa','key') {
+    @@sshkey { "sshdsakey-${host_aliases[0]}":
       host_aliases => $host_aliases,
       type         => 'ssh-dss',
-      key          => $::sshdsakey,
+      key          => $facts['ssh']['dsa']['key'],
     }
   }
 
-  if $facts['sshecdsakey'] {
-    @@sshkey { "sshecdsakey-${::hostname}":
+  if $facts.dig('ssh','ecdsa','key') {
+    @@sshkey { "sshecdsakey-${host_aliases[0]}":
       host_aliases => $host_aliases,
       type         => 'ecdsa-sha2-nistp256',
-      key          => $::sshecdsakey,
+      key          => $facts['ssh']['ecdsa']['key'],
     }
   }
 
-  if $facts['sshed25519key'] {
-    @@sshkey { "sshed25519key-${::hostname}":
+  if $facts.dig('ssh','ed25519','key') {
+    @@sshkey { "sshed25519key-${host_aliases[0]}":
       host_aliases => $host_aliases,
       type         => 'ssh-ed25519',
-      key          => $::sshed25519key,
+      key          => $facts['ssh']['ed25519']['key'],
     }
   }
 

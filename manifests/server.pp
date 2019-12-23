@@ -26,7 +26,7 @@ class ssh::server {
 
   if size($ssh::ssh_packages) > 0 {
     Service {
-      subscribe => Package[$::ssh::ssh_packages],
+      subscribe => Package[$ssh::ssh_packages],
     }
   }
 
