@@ -38,7 +38,6 @@ describe 'ssh::server::config' do
         HostbasedAuthentication
         HostbasedUsesNameFromPacketOnly
         HostCertificate
-        HostKey
         HostKeyAlgorithms
         IgnoreRhosts
         IgnoreUserKnownHosts
