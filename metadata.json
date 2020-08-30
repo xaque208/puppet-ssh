@@ -58,6 +58,5 @@
       "name": "puppetlabs/stdlib",
       "version_requirement": ">= 4.0.0"
     }
-  ],
-  "data_provider": "hiera"
+  ]
 }
