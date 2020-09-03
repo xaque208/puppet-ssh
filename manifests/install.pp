@@ -4,7 +4,6 @@
 class ssh::install (
   Enum['present', 'absent', 'latest'] $ensure = 'present',
 ) {
-
   include ssh
 
   if length($ssh::ssh_packages) > 0 {

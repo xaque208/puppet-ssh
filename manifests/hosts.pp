@@ -7,8 +7,7 @@
 class ssh::hosts (
   Array[String] $host_aliases = [$trusted['certname'], $trusted['hostname']],
   Boolean $collect_keys       = true,
-){
-
+) {
   if $facts.dig('ssh','dsa','key') {
     @@sshkey { "sshdsakey-${host_aliases[0]}":
       host_aliases => $host_aliases,

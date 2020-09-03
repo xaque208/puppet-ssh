@@ -48,6 +48,12 @@
       ]
     }
   ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 5.0.0 < 8.0.0"
+    }
+  ],
   "description": "A Puppet module to configure OpenSSH servers",
   "dependencies": [
     {
@@ -58,6 +64,5 @@
       "name": "puppetlabs/stdlib",
       "version_requirement": ">= 4.0.0"
     }
-  ],
-  "data_provider": "hiera"
+  ]
 }
