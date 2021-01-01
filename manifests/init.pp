@@ -22,8 +22,7 @@ class ssh (
   String $root_group,
   Boolean $service_hasrestart,
   Array $ssh_packages,
-){
-
+) {
   include ssh::install
 
   concat { $ssh_config:

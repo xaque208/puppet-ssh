@@ -46,7 +46,7 @@ class ssh::server {
   }
 
   file { $ssh::known_hosts:
-    ensure => present,
+    ensure => file,
     owner  => 'root',
     group  => '0',
     mode   => '0644',

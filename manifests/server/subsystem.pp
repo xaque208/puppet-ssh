@@ -11,7 +11,6 @@
 define ssh::server::subsystem (
   $system,
 ) {
-
   include ssh
   include ssh::server
 

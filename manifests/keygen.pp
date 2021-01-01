@@ -14,7 +14,6 @@ define ssh::keygen (
   Optional[String] $target                             = undef,
   String $user                                         = 'root',
 ) {
-
   if !$size {
     $size_final = ssh::default_key_size($type)
   } else {

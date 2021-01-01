@@ -85,7 +85,6 @@ class ssh::server::config (
   $has_pam                  = false,
   $has_gssapi               = false,
 ) {
-
   include ssh
 
   $valid_keywords = [
@@ -167,7 +166,6 @@ class ssh::server::config (
     'X11UseLocalhost',
     'XAuthLocation',
   ]
-
 
   # Keywords that are joined by spaces in the presence of multiple
   # values
