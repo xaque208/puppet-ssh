@@ -12,7 +12,6 @@ define ssh::server::hostkey (
   Stdlib::Absolutepath $path,
   Integer[40, 99] $order = 40,
 ) {
-
   include ssh
   include ssh::server
 

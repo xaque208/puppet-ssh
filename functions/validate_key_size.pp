@@ -4,7 +4,6 @@ function ssh::validate_key_size(
   String $type,
   Integer $size
 ) {
-
   case $type {
     'dsa': {
       if $size != 1024 {

@@ -56,7 +56,6 @@ define ssh::server::match (
 
   Optional[String] $log_level      = undef, # underscore here because puppet
 ) {
-
   include ssh::server
 
   $valid_token = [
