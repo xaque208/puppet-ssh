@@ -8,25 +8,28 @@ class ssh::hosts (
   Array[String] $host_aliases = [$trusted['certname'], $trusted['hostname']],
   Boolean $collect_keys       = true,
 ) {
+  $first = $host_aliases[0]
+  $rest  = $host_aliases[1, -1]
+
   if $facts.dig('ssh','dsa','key') {
-    @@sshkey { "sshdsakey-${host_aliases[0]}":
-      host_aliases => $host_aliases,
+    @@sshkey { "${first}@ssh-dss":
+      host_aliases => $rest,
       type         => 'ssh-dss',
       key          => $facts['ssh']['dsa']['key'],
     }
   }
 
   if $facts.dig('ssh','ecdsa','key') {
-    @@sshkey { "sshecdsakey-${host_aliases[0]}":
-      host_aliases => $host_aliases,
+    @@sshkey { "${first}@ecdsa-sha2-nistp256":
+      host_aliases => $rest,
       type         => 'ecdsa-sha2-nistp256',
       key          => $facts['ssh']['ecdsa']['key'],
     }
   }
 
   if $facts.dig('ssh','ed25519','key') {
-    @@sshkey { "sshed25519key-${host_aliases[0]}":
-      host_aliases => $host_aliases,
+    @@sshkey { "${first}@ssh-ed25519":
+      host_aliases => $rest,
       type         => 'ssh-ed25519',
       key          => $facts['ssh']['ed25519']['key'],
     }
